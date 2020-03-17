@@ -2,113 +2,9 @@
 
 using namespace std; 
 
-// Contestant Class 
-class Contestant 
-{
-private: 
-    int contestantNumber; 
-    string contestantName; 
-    float contestantGrandTotal; 
-public: 
-    // Contestant Default Constructor 
-    Contestant ()
-    {
-        contestantNumber = 0; 
-        contestantName = "DEFAULT"; 
-        contestantGrandTotal = 0.0; 
-    }
-    // Contestant Primary Constructor 
-    Contestant (int contestantNumber, string contestantName, float contestantGrantTotal)
-    {
-        this -> contestantNumber = contestantNumber; 
-        this -> contestantName = contestantName; 
-        this -> contestantGrandTotal = contestantGrandTotal; 
-    }
-    // Contestant Copy Constructor 
-    Contestant (Contestant &copy)
-    {
-        this -> contestantNumber = copy.contestantNumber; 
-        this -> contestantName = copy.contestantName; 
-        this -> contestantGrandTotal = copy.contestantGrandTotal; 
-    }
-
-    // Contestant Setters 
-    void setContestantNumber (int contestantNumber)
-    { this -> contestantNumber = contestantNumber; }
-
-    void setContestantName (string contestantName)
-    { this -> contestantName = contestantName; }
-
-    void setContestantGrandTotal (float contestantGrandTotal)
-    { this -> contestantGrandTotal = contestantGrandTotal; }
-
-    // Contestant Getters 
-    int getContestantNumber () 
-    { return this -> contestantNumber; }
-
-    string getContestantName ()
-    { return this -> contestantName; }
-
-    float getContestantGrandTotal () 
-    { return this -> contestantGrandTotal; }
-
-    // Display Contestant Info 
-    void DisplayContestant ()
-    {
-        cout << "Contestant Number: " << getContestantNumber() << endl; 
-        cout << "Contestant Name: " << getContestantName() << endl; 
-        cout << "Contestant Grand Total: " << getContestantGrandTotal() << endl; 
-    }
-    ~ Contestant ()
-    {}
-};
-
-// Contestant Node Class 
-class ContestantNode 
-{
-private:
-    Contestant playerData; 
-    ContestantNode * nextNode; 
-    ContestantNode * prevNode; 
-public: 
-    // Contestant Node Default Constructor 
-    ContestantNode ()
-    {
-        nextNode = NULL; 
-        prevNode = NULL; 
-    }
-    // Contestant Node Primary Constructor 
-    ContestantNode (Contestant playerData)
-    { this -> playerData = playerData; }
-
-    // Contestant Node Setters 
-    void setPrevNode (ContestantNode * prevNode)
-    { this -> prevNode = prevNode; }
-
-    void setNextNode (ContestantNode * nextNode)
-    { this -> nextNode = nextNode; }
-
-    void setPlayerData (Contestant playerData)
-    { this -> playerData = playerData; }
-
-    // Contestant Node Getters
-    ContestantNode * getPrevNode ()
-    { return this -> prevNode; }
-
-    ContestantNode * getNextNode () 
-    { return this -> nextNode; }
-
-    Contestant getPlayerData ()
-    { return this -> playerData; }
-
-    // Display Contestant Node Info
-    void DisplayContestantNode () 
-    {
-        getPlayerData().DisplayContestant(); 
-    }
-    ~ ContestantNode ()
-    {}
-};
+// Function Declaration
+int RandomNumber (int int);
+int SpinWheel (); 
 
 int main ()
 {
@@ -118,4 +14,35 @@ int main ()
 
     // Game Begins 
     return 0; 
+}
+
+// Game Functions 
+
+/* Generates a random number 
+inbetween 2 Indicated Numbers. */
+int RandomNumber (int Num1, int Num2) 
+{ return Num1 + Srand () % Num2; }
+
+/* "Spins" the wheel X amount of times, 
+then returns Y as the wheel section.*/
+int SpinWheel ()
+{
+    int i, sectionID; 
+    for (i=0, i = RandomNumber(10,21), i++)
+    {
+        // Clear Screen
+        sectionID = RandomNumber(0,26);
+
+        // Call Search Method . Display Method 
+        
+        // Sleep for .5 seconds
+    }
+    return sectionID; 
+}
+
+/*Calls the deallocator for each Class, 
+when the game is finished.*/
+void Deallocator () 
+{
+    //...
 }
