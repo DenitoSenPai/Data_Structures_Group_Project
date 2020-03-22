@@ -1,215 +1,243 @@
 #ifndef CONTESTANT_H
 #define CONTESTANT_H
-// Contestant Class 
-class Contestant 
+
+using namespace std;
+
+// Contestant Class
+class Contestant
 {
-private: 
-    int contestantNumber; 
-    string contestantName; 
-    float contestantGrandTotal; 
-public: 
-    // Contestant Default Constructor 
+private:
+    int contestantNumber;
+    string contestantName;
+    float contestantGrandTotal;
+public:
+    // Contestant Default Constructor
     Contestant ()
     {
-        contestantNumber = 0; 
-        contestantName = "DEFAULT"; 
-        contestantGrandTotal = 0.0; 
+        contestantNumber = 0;
+        contestantName = "DEFAULT";
+        contestantGrandTotal = 0.0;
     }
-    // Contestant Primary Constructor 
+    // Contestant Primary Constructor
     Contestant (int contestantNumber, string contestantName, float contestantGrantTotal)
     {
-        this -> contestantNumber = contestantNumber; 
-        this -> contestantName = contestantName; 
-        this -> contestantGrandTotal = contestantGrandTotal; 
+        this -> contestantNumber = contestantNumber;
+        this -> contestantName = contestantName;
+        this -> contestantGrandTotal = contestantGrandTotal;
     }
-    // Contestant Copy Constructor 
+    // Contestant Copy Constructor
     Contestant (Contestant &copy)
     {
-        this -> contestantNumber = copy.contestantNumber; 
-        this -> contestantName = copy.contestantName; 
-        this -> contestantGrandTotal = copy.contestantGrandTotal; 
+        this -> contestantNumber = copy.contestantNumber;
+        this -> contestantName = copy.contestantName;
+        this -> contestantGrandTotal = copy.contestantGrandTotal;
     }
 
-    // Contestant Setters 
+    // Contestant Setters
     void setContestantNumber (int contestantNumber)
-    { this -> contestantNumber = contestantNumber; }
-
-    void setContestantName (string contestantName)
-    { this -> contestantName = contestantName; }
-
+    {
+        this -> contestantNumber = contestantNumber;
+    }
+    void setContestantName ()
+    {
+        cout << "Enter Contestant Name: " << endl;
+        cin >> this -> contestantName;
+    }
     void setContestantGrandTotal (float contestantGrandTotal)
-    { this -> contestantGrandTotal = contestantGrandTotal; }
+    {
+        this -> contestantGrandTotal = contestantGrandTotal;
+    }
 
-    // Contestant Getters 
-    int getContestantNumber () 
-    { return this -> contestantNumber; }
-
+    // Contestant Getters
+    int getContestantNumber ()
+    {
+        return this -> contestantNumber;
+    }
     string getContestantName ()
-    { return this -> contestantName; }
+    {
+        return this -> contestantName;
+    }
+    float getContestantGrandTotal ()
+    {
+        return this -> contestantGrandTotal;
+    }
 
-    float getContestantGrandTotal () 
-    { return this -> contestantGrandTotal; }
-
-    // Display Contestant Info 
+    // Display Contestant Info
     void DisplayContestant ()
     {
-        cout << "Contestant Number: " << getContestantNumber() << endl; 
-        cout << "Contestant Name: " << getContestantName() << endl; 
-        cout << "Contestant Grand Total: " << getContestantGrandTotal() << endl; 
+        cout << "Contestant Number: " << getContestantNumber() << endl;
+        cout << "Contestant Name: " << getContestantName() << endl;
+        cout << "Contestant Grand Total: " << getContestantGrandTotal() << endl;
     }
     ~ Contestant ()
     {}
 };
 
-// Contestant ContestantNode Class 
-class ContestantNode 
+// Contestant ContestantNode Class
+class ContestantNode
 {
 private:
-    Contestant PlayerData; 
-    ContestantNode * nextPlayer; 
-public: 
-    // Contestant ContestantNode Default Constructor 
+    Contestant PlayerData;
+    ContestantNode * nextPlayer;
+public:
+    // Contestant ContestantNode Default Constructor
     ContestantNode ()
     {
-        nextPlayer = NULL; 
+        nextPlayer = NULL;
     }
-    // Contestant ContestantNode Primary Constructor 
+    // Contestant ContestantNode Primary Constructor
     ContestantNode (Contestant PlayerData)
-    { this -> PlayerData = PlayerData; }
+    {
+        this -> PlayerData = PlayerData;
+    }
 
-    // Contestant ContestantNode Setters 
+    // Contestant ContestantNode Setters
     void setNextPlayer (ContestantNode * nextPlayer)
-    { this -> nextPlayer = nextPlayer; }
-
+    {
+        this -> nextPlayer = nextPlayer;
+    }
     void setPlayerData (Contestant PlayerData)
-    { this -> PlayerData = PlayerData; }
+    {
+        this -> PlayerData = PlayerData;
+    }
 
     // Contestant ContestantNode Getters
-    ContestantNode * getPrevContestantNode ()
-    { return this -> prevContestantNode; }
-
-    ContestantNode * getNextPlayer () 
-    { return this -> nextPlayer; }
-
+    ContestantNode * getNextPlayer ()
+    {
+        return this -> nextPlayer;
+    }
     Contestant getPlayerData ()
-    { return this -> PlayerData; }
+    {
+        return this -> PlayerData;
+    }
 
     // Display Contestant ContestantNode Info
-    void DisplayContestantNode () 
+    void DisplayContestantNode ()
     {
-        getPlayerData().DisplayContestant(); 
+        getPlayerData().DisplayContestant();
     }
     ~ ContestantNode ()
     {}
 };
-class ContestantLinkedList 
+class ContestantLinkedList
 {
 private:
-	ContestantNode * head;
-    ContestantNode * tail; 
+    ContestantNode * head;
+    ContestantNode * tail;
 
 public:
-	ContestantLinkedList() 
+    ContestantLinkedList()
     {
-		head = NULL; 
-        tail = NULL; 
-	}
+        head = NULL;
+        tail = NULL;
+    }
 
-	bool isEmpty() 
+    bool isEmpty()
     {
         if (head == NULL)
-            return true; 
-        else 
-		    return false;
-	}
+            return true;
+        else
+            return false;
+    }
 
-	bool isFull() 
+    bool isFull()
     {
-		ContestantNode * temp = new ContestantNode();
+        ContestantNode * temp = new ContestantNode();
 
-		if (temp == NULL) 
-			return true;
-		else 
+        if (temp == NULL)
+            return true;
+        else
         {
-			delete temp;
-			return false;
-		}
-	}
+            delete temp;
+            return false;
+        }
+    }
 
-	void insertAtBack(Contestant Player) 
+    void insertAtBack(Contestant Player)
     {
-		if (isFull()) 
+        if (isFull())
         {
-			cout << "The Contestant list is full" << endl;
-		} else 
+            cout << "The Contestant list is full" << endl;
+        }
+        else
         {
-			ContestantNode * temp = new ContestantNode(Player);
-			if (isEmpty()) 
+            ContestantNode * temp = new ContestantNode(Player);
+            if (isEmpty())
             {
-				head = temp;
-                tail = temp; 
-                tail -> setNextNode(head); 
-			} else 
+                head = temp;
+                tail = temp;
+                tail -> setNextPlayer(head);
+            }
+            else
             {
-				temp -> setNextPlayer(head);
-                tail -> setNextPlayer(temp)
-				tail = temp; 
-			}
-		}
-	}
-	
-	ContestantNode search(int contestantNumber) 
+                temp -> setNextPlayer(head);
+                tail -> setNextPlayer(temp);
+                tail = temp;
+            }
+        }
+    }
+
+    /*ContestantNode search(int contestantNumber)
     {
-		if (!isEmpty())
-		{
-			ContestantNode * temp = head;
-			while (temp != NULL) // Checks head first. 
-			{
-				if (temp -> getPlayerData().getContestantNumber() == contestantNumber) 
-					// Returns that section of the WheelSection to be displayed.
-					return temp; 
-				else 
-					temp = temp -> getnextNode();
-			}
-		}
-		else 
-			cout << "Nothing to seach here." << endl;
-	}
-	void display() {
-		if (isEmpty()) {
-			cout << "Contestant list is Empty" << endl;
-		}
-		else {
-			head -> DisplayContestantNode();
-			ContestantNode * temp = head -> getNextPlayer();
-			while (temp -> getNextPlayer != head) 
+        ContestantNode * temp = head;
+        if (!isEmpty())
+        {
+            while (temp != NULL)
             {
-				temp -> DisplayContestantNode();
-				temp = temp -> getNextPlayer();
-			}
-		}
-	}
-	void deleteContetantList() {
-		if (isEmpty()) {
-			cout << "There is nothing to remove" << endl;
-		}
-		else {
-			ContestantNode * temp = head;
-            ContestantNode * prev = head; 
-			head = head -> getNextPlayer();
-			head->setPrevContestantNode(null);
-			temp = null;
-			}
-		}
-	
-void destroy() {
-	while (!isEmpty()) {
-		deleteContestantNode();
-	}
-	}
-~ContestantLinkedList() {
-	destroy();
-}
+                if (temp->getPlayerData().getContestantNumber() == contestantNumber)
+                {
+                    ContestantNode Found = new ContestantNode();
+                    Found.setPlayerData(temp->getPlayerData());
+                    return Found;
+                }
+                else
+                    temp = temp->getNextPlayer();
+            }
+        }
+    }*/
+    void display()
+    {
+        if (isEmpty())
+        {
+            cout << "Contestant list is Empty" << endl;
+        }
+        else
+        {
+            head -> DisplayContestantNode();
+            ContestantNode * temp = head -> getNextPlayer();
+            while (temp -> getNextPlayer() != head)
+            {
+                temp -> DisplayContestantNode();
+                temp = temp -> getNextPlayer();
+            }
+        }
+    }
+    void deleteContestantList()
+    {
+        if (isEmpty())
+        {
+            cout << "There is nothing to remove" << endl;
+        }
+        else
+        {
+            ContestantNode * temp = head;
+            ContestantNode * prev = head;
+            head = head -> getNextPlayer();
+            temp = NULL;
+        }
+    }
+
+    void destroy()
+    {
+        while (!isEmpty())
+        {
+            deleteContestantList();
+        }
+    }
+    ~ContestantLinkedList()
+    {
+        destroy();
+    }
 
 };
 #endif // CONTESTANT_H

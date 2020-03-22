@@ -1,170 +1,135 @@
+#pragma once
 #ifndef GAMEFUCNTIONS_H
 #define GAMEFUCNTIONS_H
 
-// Function Declaration
-int RandomNumber (int int);
-int SpinWheelSection (); 
-bool WheelSectionCreator (); 
+#include "TheWheel.h"
 
-// Game Functions 
-/* Creates The WheelSection using a for loop and 
-various conditions. */
-bool WheelSectionCreator ()
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <windows.h>
+
+using namespace std;
+WheelLinkedList TheWheel;
+
+// Function Declarations
+int SectionIdentifier(int, int);
+int SpinTheWheel();
+void TheWheelCreator();
+
+// Functions Used
+int SectionIdentifier(int x, int y)
 {
-    int i, Penalty, Reward, Bankrupt; 
-    
-    Penalty = 5; 
-    Bankrupt = 3; 
-    LoseATurn = 2;
-    
-    Rewards = 18;
-    FiveHundred = 4; 
-    FiveFifty = 1; 
-    SixHundred = 4; 
-    SixFifty = 3; 
-    SevenHundred = 3; 
-    EightHundred = 1; 
-    EightFifty = 1; 
-    TwoThousandFive = 1; 
-
-    for (i = 1, i <= 23, i++)
-    {
-        if (Penalty != 0)
-        {
-            if (Bankrupt != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(0); 
-                WheelSection.setSectionType("Bankrupt"); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                Bankrupt --; 
-                Penalty --; 
-            } else if (LoseATurn != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(0); 
-                WheelSection.setSectionType("Lose A Turn."); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                LoseATurn --; 
-                Penalty --; 
-            }
-        } else if (Rewards != 0) 
-        {
-            if (FiveHundred != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(500); 
-                WheelSection.setSectionType("$ 500"); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                FiveHundred --; 
-                Rewards --; 
-            } else if (FiveFifty != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(550); 
-                WheelSection.setSectionType("$ 550"); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                FiveHundred --; 
-                Rewards --;
-            } else if (SixHundred != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(600); 
-                WheelSection.setSectionType("$ 600"); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                SixHundred --; 
-                Rewards --;
-            } else if (SixFifty != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(650); 
-                WheelSection.setSectionType("$ 650"); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                SixFifty --; 
-                Rewards --;
-            } else if (SevenHundred != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(700); 
-                WheelSection.setSectionType("$ 700"); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                SevenHundred --; 
-                Rewards --;
-            } else if (EightHundred != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(800); 
-                WheelSection.setSectionType("$ 800"); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                EightHundred --; 
-                Rewards --;
-            } else if (EightFifty != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(850); 
-                WheelSection.setSectionType("$ 850"); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                EightFifty --; 
-                Rewards --;
-            } else if (TwoThousandFive != 0)
-            {
-                WheelSection = new WheelSection (); 
-                WheelSection.setSectionId(i); 
-                WheelSection.setSectionValue(500); 
-                WheelSection.setSectionType("$ 500"); 
-                WheelLinkedList.InsertIntoWheel(WheelSection);
-                FiveHundred --; 
-                Rewards --;
-            }
-        }
-    }
-    if (i == 23)
-        return true; 
-    else 
-        return false; 
+    /*Generates a random number inbetween
+    two indicated values.*/
+    srand(time(NULL));
+    //return rand() % (y - x + 1) + x;
+    return x + (rand()%y);
 }
-
-/* Generates a random number 
-inbetween 2 Indicated Numbers. */
-int RandomNumber (int X, int Y) 
-{ 
-    return X + Srand () % Y; 
-}
-
-/* "Spins" the WheelSection X amount of times, 
-then returns Y as the WheelSection section.*/
-int SpinWheelSection ()
+int SpinTheWheel()
 {
-    int i, sectionID; 
-    for (i=0, i = RandomNumber(10,21), i++)
+    int i, sectionID;
+
+    for (i=0; i <= SectionIdentifier(10, 20); i++)
     {
         // Clear Screen
-        sectionID = RandomNumber(0,23);
+        system("cls");
+        sectionID = SectionIdentifier(1, 23);
 
-        // Call Search Method . Display Method 
-        WheelLinkedList.Search(sectionID).display(); 
+        // Call Search Method . Display Method
+        cout
+        << "---"
+        << "" << TheWheel.Search(sectionID)->getSectionData().getSectionType()
+        << "---"
+        << endl;
 
         // Sleep for .5 seconds
-        Sleep(5000);
+        Sleep(0300);
     }
-    return sectionID; 
+    return i;
 }
 
-/*Calls the deallocator for each Class, 
-when the game is finished.*/
-void Deallocator () 
+void TheWheelCreator()
 {
-    //...
-}
+        // Variables to make sure the correct amount of sections are created.
+    int i, Bankrupt = 3, LoseATurn = 2,
+        FiveHundred = 4, FiveFifty = 1,
+        SixHundred = 4, SixFifty = 3, SevenHundred = 3,
+        EightHundred = 1, EightFifty = 1, TwoThousandFive = 1;
 
+
+    for (i = 1; i <= 23; i++)
+    {
+        if (Bankrupt != 0)
+        {
+            WheelSection Section(i, 0, "Bankrupt");
+            TheWheel.InsertIntoWheel(Section);
+            Bankrupt--;
+
+        }
+        else if (LoseATurn != 0)
+        {
+            WheelSection Section(i, 0, "Lose a turn");
+            TheWheel.InsertIntoWheel(Section);
+            LoseATurn--;
+
+        }
+        else if (FiveHundred != 0)
+        {
+            WheelSection Section(i, 500, "$500");
+            TheWheel.InsertIntoWheel(Section);
+            FiveHundred--;
+
+        }
+        else if (FiveFifty != 0)
+        {
+            WheelSection Section(i, 500, "$550");
+            TheWheel.InsertIntoWheel(Section);
+            FiveFifty--;
+
+        }
+        else if (SixHundred != 0)
+        {
+            WheelSection Section(i, 600, "$600");
+            TheWheel.InsertIntoWheel(Section);
+            SixHundred--;
+
+        }
+        else if (SixFifty != 0)
+        {
+            WheelSection Section(i, 650, "$650");
+            TheWheel.InsertIntoWheel(Section);
+            SixFifty--;
+
+        }
+        else if (SevenHundred != 0)
+        {
+            WheelSection Section(i, 700, "$700");
+            TheWheel.InsertIntoWheel(Section);
+            SevenHundred--;
+
+        }
+        else if (EightHundred != 0)
+        {
+            WheelSection Section(i, 800, "$800");
+            TheWheel.InsertIntoWheel(Section);
+            EightHundred--;
+
+        }
+        else if (EightFifty != 0)
+        {
+            WheelSection Section(i, 850, "$850");
+            TheWheel.InsertIntoWheel(Section);
+            EightFifty--;
+
+        }
+        else if (TwoThousandFive != 0)
+        {
+            WheelSection Section(i, 2500, "$2500");
+            TheWheel.InsertIntoWheel(Section);
+            TwoThousandFive--;
+        }
+    }
+}
 
 #endif // GAMEFUCNTIONS_H
