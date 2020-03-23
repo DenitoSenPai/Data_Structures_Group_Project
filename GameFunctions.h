@@ -10,12 +10,14 @@
 #include <windows.h>
 
 using namespace std;
+// The single instance of The wheel class that will be used.
 WheelLinkedList TheWheel;
 
 // Function Declarations
 int SectionIdentifier(int, int);
 int SpinTheWheel();
 void TheWheelCreator();
+void NumberOfPlayers();
 
 // Functions Used
 int SectionIdentifier(int x, int y)
@@ -37,9 +39,9 @@ int SpinTheWheel()
         sectionID = SectionIdentifier(1, 23);
 
         // Call Search Method . Display Method
-        cout
-        << "---"
-        << "" << TheWheel.Search(sectionID)->getSectionData().getSectionType()
+        cout << "---"
+        << ""
+        << TheWheel.Search(sectionID)->getSectionData().getSectionType()
         << "---"
         << endl;
 
@@ -51,12 +53,11 @@ int SpinTheWheel()
 
 void TheWheelCreator()
 {
-        // Variables to make sure the correct amount of sections are created.
+    // Variables to make sure the correct amount of sections are created.
     int i, Bankrupt = 3, LoseATurn = 2,
-        FiveHundred = 4, FiveFifty = 1,
-        SixHundred = 4, SixFifty = 3, SevenHundred = 3,
-        EightHundred = 1, EightFifty = 1, TwoThousandFive = 1;
-
+           FiveHundred = 4, FiveFifty = 1,
+           SixHundred = 4, SixFifty = 3, SevenHundred = 3,
+           EightHundred = 1, EightFifty = 1, TwoThousandFive = 1;
 
     for (i = 1; i <= 23; i++)
     {
@@ -132,4 +133,19 @@ void TheWheelCreator()
     }
 }
 
+void NumberOfPlayers ()
+{
+// Get the Number of Players.
+// Assign Them Accordingly.
+    cout << "Enter # of Contestant: " << endl;
+    cin >> numPlayers;
+    for (i = 1; i <= numPlayers; i++)
+    {
+        Contestant Player;
+        Player.setContestantName();
+        Player.setContestantGrandTotal(0);
+        Player.setContestantNumber(i);
+    }
+    cout << "Players have been added..." << endl;
+}
 #endif // GAMEFUCNTIONS_H
