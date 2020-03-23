@@ -3,6 +3,7 @@
 #define GAMEFUCNTIONS_H
 
 #include "TheWheel.h"
+#include "Contestant.h"
 
 #include <iostream>
 #include <cstdlib>
@@ -137,6 +138,7 @@ void NumberOfPlayers ()
 {
 // Get the Number of Players.
 // Assign Them Accordingly.
+	int numPlayers = 0, i = 0; 
     cout << "Enter # of Contestant: " << endl;
     cin >> numPlayers;
     for (i = 1; i <= numPlayers; i++)

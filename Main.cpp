@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <fstream>
+#include <vector>
 #include <string>
 
 
@@ -13,40 +14,55 @@ using namespace std;
 
 int main()
 {
-    int numPlayers=0, i=0, lineSize = 0;
-    char sChar, lineContent[lineSize];
-    string line;
+	// All the main game play variables. 
+    int numPlayers=0, i=0, lineSize = 0, numLine = 0, flag = 0;
+    char sChar = ' ', lineContent[50];
+    //string line;
+    std::vector<char> lineData;
 
     // Calls the wheel creating function to create the wheel.
     //TheWheelCreator();
 
     // Welcome Message
 
-
-
     // Game Begins
 
     // Call & Read from the .txt file.
-    int flag = 0;
 
     while (flag != 1)
     {
         ifstream gameFile ("Words_Phrases.txt");
         if  (gameFile.is_open())
         {
-
-
+        	// Gameplay occurs until eof() = true. 
             while (!gameFile.eof())
             {
-                // Character
-                gameFile.get(sChar);
-                cout << "" << sChar;
+            	gameFile.get(sChar);
+            	
+				   while (sChar != '\n')
+		        	{
+		        		// Line Content array has been populated. 
+		        		lineContent[i] = sChar; 
+		        		i++;
+						gameFile.get(sChar);
+					}
 
-                i++;
-            }
-            cout << "\n" << "Number of characters: " << i << endl;
+        		
+				if (sChar == '\n')
+				{
+					// Counts the amount of lines. 
+					cout << "" << sChar; 
+					numLine++;
+				}
+			}
+                	
+            cout << "Number of Characters: " << i << endl;
+            cout << "Number of Lines: " << numLine-1 << endl; 
+            for (i=0; i<=50; i++)
+        		cout << lineContent[i];  
         }
-        flag = 1;
+        
+         
     }
     cout << endl;
 
