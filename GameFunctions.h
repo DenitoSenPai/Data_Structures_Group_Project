@@ -71,7 +71,7 @@ void TheWheelCreator()
         }
         else if (LoseATurn != 0)
         {
-            WheelSection Section(i, 0, "Lose a turn");
+            WheelSection Section(i, 0, "Lose A Turn.");
             TheWheel.InsertIntoWheel(Section);
             LoseATurn--;
 
@@ -138,7 +138,7 @@ void NumberOfPlayers ()
 {
 // Get the Number of Players.
 // Assign Them Accordingly.
-	int numPlayers = 0, i = 0; 
+    int numPlayers=0, i;
     cout << "Enter # of Contestant: " << endl;
     cin >> numPlayers;
     for (i = 1; i <= numPlayers; i++)
