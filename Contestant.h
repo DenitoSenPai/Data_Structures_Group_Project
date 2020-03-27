@@ -177,7 +177,7 @@ public:
         }
     }
 
-    /*ContestantNode search(int contestantNumber)
+    ContestantNode * Search(int contestantNumber)
     {
         ContestantNode * temp = head;
         if (!isEmpty())
@@ -186,15 +186,13 @@ public:
             {
                 if (temp->getPlayerData().getContestantNumber() == contestantNumber)
                 {
-                    ContestantNode Found = new ContestantNode();
-                    Found.setPlayerData(temp->getPlayerData());
-                    return Found;
+                    return temp;
                 }
                 else
                     temp = temp->getNextPlayer();
             }
         }
-    }*/
+    }
     void display()
     {
         if (isEmpty())

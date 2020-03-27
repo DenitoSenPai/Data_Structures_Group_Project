@@ -13,10 +13,12 @@
 using namespace std;
 // The single instance of The wheel class that will be used.
 WheelLinkedList TheWheel;
+ContestantLinkedList PlayerBase; 
 
 // Function Declarations
 int SectionIdentifier(int, int);
 int SpinTheWheel();
+int GamePlayMenu();
 void TheWheelCreator();
 void NumberOfPlayers();
 
@@ -134,20 +136,18 @@ void TheWheelCreator()
     }
 }
 
-void NumberOfPlayers ()
+void ThePlayerBaseCreator () 
 {
-// Get the Number of Players.
-// Assign Them Accordingly.
-    int numPlayers=0, i;
-    cout << "Enter # of Contestant: " << endl;
-    cin >> numPlayers;
-    for (i = 1; i <= numPlayers; i++)
+    int i; 
+    for (i = 1; i <= 3; i++)
     {
         Contestant Player;
         Player.setContestantName();
         Player.setContestantGrandTotal(0);
         Player.setContestantNumber(i);
+        PlayerBase.insertAtBack(Player); 
     }
     cout << "Players have been added..." << endl;
 }
+
 #endif // GAMEFUCNTIONS_H
