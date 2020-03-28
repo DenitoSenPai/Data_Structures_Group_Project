@@ -9,17 +9,17 @@ class Contestant
 private:
     int contestantNumber;
     string contestantName;
-    float contestantGrandTotal;
+    int contestantGrandTotal;
 public:
     // Contestant Default Constructor
     Contestant ()
     {
         contestantNumber = 0;
         contestantName = "DEFAULT";
-        contestantGrandTotal = 0.0;
+        contestantGrandTotal = 0;
     }
     // Contestant Primary Constructor
-    Contestant (int contestantNumber, string contestantName, float contestantGrantTotal)
+    Contestant (int contestantNumber, string contestantName, int contestantGrantTotal)
     {
         this -> contestantNumber = contestantNumber;
         this -> contestantName = contestantName;
@@ -43,7 +43,7 @@ public:
         cout << "Enter Contestant Name: " << endl;
         cin >> this -> contestantName;
     }
-    void setContestantGrandTotal (float contestantGrandTotal)
+    void setContestantGrandTotal (int contestantGrandTotal)
     {
         this -> contestantGrandTotal = contestantGrandTotal;
     }
@@ -57,7 +57,7 @@ public:
     {
         return this -> contestantName;
     }
-    float getContestantGrandTotal ()
+    int getContestantGrandTotal ()
     {
         return this -> contestantGrandTotal;
     }
