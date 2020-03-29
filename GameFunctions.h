@@ -29,13 +29,12 @@ int SectionIdentifier(int x, int y)
     two indicated values.*/
     srand(time(NULL));
     //return rand() % (y - x + 1) + x;
-    return x + (rand()%y);
+    return x + (rand() % y);
 }
 int SpinTheWheel()
 {
-    int i = 0, sectionID = 0;
-
-    for (i=0; i <= SectionIdentifier(10, 20); i++)
+    int i = 0, sectionID = 1;
+    for (i = 0; i <= SectionIdentifier(10, 20); i++)
     {
         // Clear Screen
         system("cls");
@@ -51,7 +50,7 @@ int SpinTheWheel()
         // Sleep for .5 seconds
         Sleep(0300);
     }
-    return i;
+    return sectionID;
 }
 
 void TheWheelCreator()
@@ -149,6 +148,16 @@ void ThePlayerBaseCreator ()
         PlayerBase.insertAtBack(Player); 
     }
     cout << "Players have been added..." << endl;
+}
+
+int GamePlayMenu()
+{
+    int playerOpt = 0;
+    cout << "1. Spin The Wheel" << endl;
+    cout << "2. Buy A Vowel ($150)." << endl;
+    cout << "3. Guess the entire word." << endl;
+    cin >> playerOpt;
+    return playerOpt;
 }
 
 #endif // GAMEFUCNTIONS_H
