@@ -15,11 +15,15 @@ int main()
 {
     int roundNum = 1, i = 0;
 
-    // Calls the wheel creating function to create the wheel.
+    // Creates The Wheel with the various sections.
     TheWheelCreator();
-    ThePlayerBaseCreator();
 
     // Welcome Message
+    // cout << "Welcome to Young Lads Wheel of Fortune" << endl;
+
+    // Creates Three Players, that the user will enter.
+    // ThePlayerBaseCreator();
+
     // Game Begins
 
     // Call & Read from the .txt file.
@@ -30,27 +34,25 @@ int main()
         while (!gameFile.eof())
         {
             // Round Variables
-            // Declared here so they can get reset each round.
+            // Variables get reinitalize each line so they can be reused.
             int currentPlayer = 1, lineSize = 0, spinResult = 0, wordGuessed = 0,
-                letterOccurence = 0, flag = 0, numDash = 0, playerAccount = 0;
-            char sChar = ' ', guessedChar = ' ',
-                 availableVowel[10] = {
-                     'A',
-                     'A',
-                     'E',
-                     'e',
-                     'I',
-                     'i',
-                     'O',
-                     'o',
-                     'U',
-                     'u',
-                 },
-                 purchaseVowel = ' ';
+                letterOccurence = 0, flag = 0, numDash = 0, playerAccount = 0, 
+                sectionValue = 0, roundTotal = 0;
+            char sChar = ' ', guessedChar = ' ', availableVowel[10] = {
+                                                     'A',
+                                                     'a',
+                                                     'E',
+                                                     'e',
+                                                     'I',
+                                                     'i',
+                                                     'O',
+                                                     'o',
+                                                     'U',
+                                                     'u',
+                                                 }, purchaseVowel = ' ';
             string line = " ", lineGuess = " ";
-            int sectionValue = 0, roundTotal = 0;
 
-            // Read everything from the line into the string.
+            // Read everything from the line into a string.
             getline(gameFile, line);
 
             // Create a character array of line size.
@@ -59,103 +61,121 @@ int main()
             // Copy the string from the line into the character array.
             copy(line.begin(), line.end(), lineContent);
 
-            // Adds NULL character
+            // Adds NULL character to the end of the char array. 
             lineContent[line.size()] = '\0';
 
             // Prints the array
-            std::cout << lineContent << endl;
-            std::cout << "Size of original: " << line.size() << endl;
-            std::cout << "Line: #" << i++ << endl;
+            cout << lineContent << endl;
+            cout << "Size of original: " << line.size() << endl;
+            cout << "Line: #" << i++ << endl;
 
             // Create a copy of the original array.
             char lineCopy[lineSize];
 
             // Populate it with " - "
-            // Display and update accordingly.
             for (i = 0; i <= lineSize; i++)
                 if (lineContent[i] == ' ')
                     lineCopy[i] = ' ';
                 else
                     lineCopy[i] = '-';
 
+            // Adds NULL character to the end of the char array. 
             lineCopy[line.size()] = '\0';
 
             // Round Begins here.
             do
             {
-                std::cout << "Round #" << roundNum << endl;
-                std::cout << "Player #" << currentPlayer << endl;
-                std::cout << lineCopy << endl;
+                // Display the copy array to be solved. 
+                cout << lineCopy << endl;
+                cout << "Round #" << roundNum << endl;
+                cout << "Player #" << currentPlayer << endl;
 
-                std::cout << "Please enter a key to spin the wheel." << endl;
+                cout << "Please enter a key to spin the wheel." << endl;
                 system("pause");
 
+                // Store the value returned from the Spin the wheel function. 
                 spinResult = SpinTheWheel();
 
-                std::cout << "" << TheWheel.Search(spinResult)->getSectionData().getSectionType() << endl;
+                // Use the spinResult value to find the Wheel Section/Card. 
+                cout << "" << TheWheel.Search(spinResult)->getSectionData().getSectionType() << endl;
+                
+                // Store the value of that card/section to be analyzed.  
                 sectionValue = TheWheel.Search(spinResult)->getSectionData().getSectionValue();
 
                 if (sectionValue == 0)
                 {
                     if (TheWheel.Search(spinResult)->getSectionData().getSectionType() == "Lose A Turn.")
                     {
-                        std::cout << "Sorry, your turn has been lost." << endl;
+
+                        cout << "Sorry, your turn has been lost." << endl;
+                        currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
                     }
                     else if (TheWheel.Search(spinResult)->getSectionData().getSectionType() == "Bankrupt")
                     {
-                        std::cout << "Sorry, you have been Bankrupted." << endl;
+                        cout << "Sorry, you have been Bankrupted." << endl;
                         PlayerBase.Search(currentPlayer)->getPlayerData().setContestantGrandTotal(0);
+                        currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
                     }
                 }
-                else
+                else if (sectionValue > 0)
                 {
-                    std::cout << "Guess a letter." << endl;
-                    std::cin >> guessedChar;
+                    // Stores the value of the card/section. 
+                    roundTotal = TheWheel.Search(spinResult)->getSectionData().getSectionValue(); 
+
+                    cout << "Guess a letter." << endl;
+                    cin >> guessedChar;
+
                     while (sectionValue > 0 || wordGuessed != 1 || flag != 1)
                     {
-
                         for (i = 0; i <= lineSize; i++)
                         {
+                            // Compares each character in the array. 
                             if (lineContent[i] == guessedChar)
                             {
+                                // Counts the amount of time it occurs.
                                 lineCopy[i] = guessedChar;
                                 letterOccurence++;
                             }
                         }
                         if (letterOccurence == 0)
                         {
-                            std::cout << "Sorry Incorrect Letter Guessed." << endl;
-                            std::cout << "Moving to next player." << endl;
+                            // If there is no occurences then its not in the array. 
+                            cout << "Sorry Incorrect Letter Guessed." << endl;
+                            cout << "Moving to next player." << endl;
                             currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
                             flag = 1;
-                        } 
+                        }
                         else if (lineContent == lineCopy)
                         {
+                            // There was X amount of occurence.
+                            // Checking to see if the word was solved. 
+                            roundTotal = PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() + (sectionValue * letterOccurence);
+
                             wordGuessed = 1;
                         }
                         else
                         {
                             roundTotal = PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() + (sectionValue * letterOccurence);
-                            PlayerBase.Search(currentPlayer)->getPlayerData().setContestantGrandTotal(roundTotal);
 
                             switch (GamePlayMenu())
                             {
                             case 1:
                                 spinResult = SpinTheWheel();
 
-                                std::cout << "" << TheWheel.Search(spinResult)->getSectionData().getSectionType() << endl;
+                                cout << "" << TheWheel.Search(spinResult)->getSectionData().getSectionType() << endl;
                                 sectionValue = TheWheel.Search(spinResult)->getSectionData().getSectionValue();
 
                                 if (sectionValue == 0)
                                 {
                                     if (TheWheel.Search(spinResult)->getSectionData().getSectionType() == "Lose A Turn.")
                                     {
-                                        std::cout << "Sorry, your turn has been lost." << endl;
+                                        cout << "Sorry, your turn has been lost." << endl;
                                         currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
+                                        
                                     }
                                     else if (TheWheel.Search(spinResult)->getSectionData().getSectionType() == "Bankrupt")
                                     {
-                                        std::cout << "Sorry, you have been Bankrupted." << endl;
+                                        cout << "Sorry, you have been Bankrupted." << endl;
                                         PlayerBase.Search(currentPlayer)->getPlayerData().setContestantGrandTotal(0);
                                         currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
                                     }
@@ -171,7 +191,8 @@ int main()
                                         cout << " - ";
                                     }
 
-                                    cout << "\n" << "Each Vowel Cost $150" << endl;
+                                    cout << "\n"
+                                         << "Each Vowel Cost $150" << endl;
                                     cout << "Enter the Vowel you wish to purchase: " << endl;
                                     cin >> purchaseVowel;
 
@@ -190,30 +211,30 @@ int main()
                                 }
                                 break;
                             case 3:
-                                cout << "Enter the entire Word/Phrase. " << endl; 
+                                cout << "Enter the entire Word/Phrase. " << endl;
                                 cout << "Ensure its Properly formated." << endl;
-                                cin >> lineGuess; 
+                                cin >> lineGuess;
                                 if (lineGuess == line)
                                 {
-                                    cout << "Congratulations, you guessed the word correctly." << endl; 
+                                    cout << "Congratulations, you guessed the word correctly." << endl;
                                     wordGuessed = 1;
-                                } 
-                                else 
+                                }
+                                else
                                 {
-                                    cout << "Sorry, your guess was incorrect." << endl; 
-                                    cout << "Moving to next player." << endl; 
+                                    cout << "Sorry, your guess was incorrect." << endl;
+                                    cout << "Moving to next player." << endl;
                                     currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
                                 }
                                 break;
                             default:
+                                cout << "You Entered the wrong option." << endl; 
                                 break;
                             }
                         }
                     }
                 }
 
-
-                std::cout << "Its Player #" << currentPlayer << "s Turn." << endl;
+                cout << "Its Player #" << currentPlayer << "s Turn." << endl;
                 system("pause");
 
             } while (wordGuessed != 1);
@@ -222,16 +243,16 @@ int main()
     }
 
     //TheWheel.Search(SpinTheWheel());
-    //std::cout << "Complete: " << SpinTheWheel() << endl;
+    //cout << "Complete: " << SpinTheWheel() << endl;
     return 0;
 }
 
 int GamePlayMenu()
 {
     int playerOpt = 0;
-    std::cout << "1. Spin The Wheel" << endl;
-    std::cout << "2. Buy A Vowel." << endl;
-    std::cout << "3. Guess the entire word." << endl;
-    std::cin >> playerOpt;
+    cout << "1. Spin The Wheel" << endl;
+    cout << "2. Buy A Vowel." << endl;
+    cout << "3. Guess the entire word." << endl;
+    cin >> playerOpt;
     return playerOpt;
 }

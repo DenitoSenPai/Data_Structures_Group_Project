@@ -33,7 +33,7 @@ int SectionIdentifier(int x, int y)
 }
 int SpinTheWheel()
 {
-    int i, sectionID;
+    int i = 0, sectionID = 0;
 
     for (i=0; i <= SectionIdentifier(10, 20); i++)
     {
@@ -142,6 +142,7 @@ void ThePlayerBaseCreator ()
     for (i = 1; i <= 3; i++)
     {
         Contestant Player;
+        cout << "Player #" << i << endl; 
         Player.setContestantName();
         Player.setContestantGrandTotal(0);
         Player.setContestantNumber(i);
