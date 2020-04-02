@@ -140,6 +140,7 @@ void ThePlayerBaseCreator ()
     int i; 
     for (i = 1; i <= 3; i++)
     {
+        system("cls");
         Contestant Player;
         cout << "Player #" << i << endl; 
         Player.setContestantName();
