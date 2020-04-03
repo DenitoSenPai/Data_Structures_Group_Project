@@ -14,7 +14,7 @@ using namespace std;
 
 int main()
 {
-    int roundNum = 0, i = 0;
+    int roundNum = 1, i = 0;
 
     // Creates The Wheel with the various sections.
     TheWheelCreator();
@@ -30,9 +30,10 @@ int main()
     // Call & Read from the .txt file.
 
     ifstream gameFile("Words_Phrases.txt");
+
     if (gameFile.is_open())
     {
-        while (!gameFile.eof())
+        while (!gameFile.eof() && roundNum != 4)
         {
             // Round Variables
             // Variables get reinitalize each lineString so they can be reused.
@@ -40,12 +41,9 @@ int main()
                 letterOccurence = 0, flag = 0, numDash = 0, playerAccount = 0,
                 sectionValue = 0, roundTotal = 0, arrayCompare = 0;
 
-            ;
-            char sChar = ' ', guessedChar = ' ', 
-            availableVowel[10] = {'A','a','E','e','I','i','O','o','U','u',}, purchaseVowel = ' ';
+            char sChar = ' ', guessedChar = ' ',
+                 availableVowel[10] = {'A','a','E','e','I','i','O','o','U','u',}, purchaseVowel = ' ';
             string lineString = " ", lineGuess = " ";
-
-            roundNum++;
 
             // Read everything from the lineString into a string.
             getline(gameFile, lineString);
@@ -93,11 +91,11 @@ int main()
                 switch (GamePlayMenu())
                 {
                 case 1:
-                    /*Spin the wheel then ask the player to guess if they land on a reward, 
-                    else turn is passed and penalty is issued. 
+                    /*Spin the wheel then ask the player to guess if they land on a reward,
+                    else turn is passed and penalty is issued.
                     If guess is successful, round total is updated.*/
-                    system("cls"); 
-                     
+                    system("cls");
+
                     // Store the value returned from the Spin the wheel function.
                     spinResult = SpinTheWheel();
 
@@ -141,7 +139,7 @@ int main()
 
                         if (letterOccurence == 0)
                         {
-                            // If there is no occurences then its not in the array. Moves to next player. 
+                            // If there is no occurences then its not in the array. Moves to next player.
                             cout << "Sorry Incorrect Letter Guessed." << endl;
                             cout << "Moving to next player..." << endl;
                             currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
@@ -149,8 +147,10 @@ int main()
                         }
                         else
                         {
+                            fflush(stdin);
                             roundTotal = roundTotal + (sectionValue * letterOccurence);
-                            PlayerBase.Search(currentPlayer)->getPlayerData().setContestantGrandTotal(roundTotal); 
+                            PlayerBase.Search(currentPlayer)->getPlayerData().setContestantGrandTotal(roundTotal);
+                            cout << "" << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
                             cout << "Your Guess Was Correct." << endl;
                             system("pause");
                         }
@@ -158,12 +158,13 @@ int main()
                     break;
 
                 case 2:
-                    /*Player is provided with a list of Vowels if they have at leasr 150$. 
-                    If the vowel guessed is correct then the Vowel guess is updated and that 
+                    /*Player is provided with a list of Vowels if they have at leasr 150$.
+                    If the vowel guessed is correct then the Vowel guess is updated and that
                     vowel is tested. */
                     system("cls");
                     // Stores the current player Grand total into Player Account for easier manipulation.
 
+                    fflush(stdin);
                     if (PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() >= 150)
                     {
                         system("cls");
@@ -189,16 +190,16 @@ int main()
                                 break;
                             }
                         }
-                        // If AvaiableV = 1, then the vowel was in the vowel list. 
+                        // If AvaiableV = 1, then the vowel was in the vowel list.
                         if (avaiableV == 1)
                         {
                             for (i = 0; i <= 9; i++)
                             {
                                 if (availableVowel[i] == purchaseVowel)
                                 {
-                                    //List is updated. 
+                                    //List is updated.
                                     availableVowel[i] = '-';
-                                    // Player Account is charged. 
+                                    // Player Account is charged.
                                     playerAccount = PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal();
                                     playerAccount = playerAccount - 150;
                                     PlayerBase.Search(currentPlayer)->getPlayerData().setContestantGrandTotal(playerAccount);
@@ -243,8 +244,8 @@ int main()
                     break;
 
                 case 3:
-                    /*Request the entire word/phrase from the player, 
-                    Compares what the user enters to what was scanned 
+                    /*Request the entire word/phrase from the player,
+                    Compares what the user enters to what was scanned
                     from the file.*/
                     system("cls");
                     cout << "Enter the entire Word/Phrase. " << endl;
@@ -255,7 +256,7 @@ int main()
                     {
                         cout << "Congratulations, you attempt was succesfull." << endl;
                         for (i = 0; i < lineSize; i++)
-                            lineCopy[i] = lineContent[i]; 
+                            lineCopy[i] = lineContent[i];
                     }
                     else
                     {
@@ -277,22 +278,32 @@ int main()
                     if (lineContent[i] != lineCopy[i])
                         arrayCompare = 0;
 
-            } while (arrayCompare != 1);
+            }
+            while (arrayCompare != 1);
 
             /*Only the player that manages to exit the loop
-            would have finally solved the puzzel get to keep 
-            the money they accumilated. Every other player will be reset*/ 
+            would have finally solved the puzzel get to keep
+            the money they accumilated. Every other player will be reset*/
             for(i = 1; i <= 3; i++)
                 if (i != currentPlayer)
                     PlayerBase.Search(i)->getPlayerData().setContestantGrandTotal(0);
-            
-            // Winner is awarded. 
-            cout << "Winner: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantName() << endl; 
+
+            // Winner is awarded.
+            cout << "Winner of Round: "<< roundNum << endl;
+            cout << "Player Name: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantName() << endl;
             PlayerBase.Search(currentPlayer)->getPlayerData().setContestantGrandTotal(roundTotal);
+
+            roundNum++;
+            system("pause");
         }
+        gameFile.close();
+    }
+    else
+    {
+        cout << "Sorry, file wasnt found." << endl;
     }
 
     //TheWheel.Search(SpinTheWheel());
-    //cout << "Complete: " << SpinTheWheel() << endl;
+    cout << "The code done." << endl;
     return 0;
 }
