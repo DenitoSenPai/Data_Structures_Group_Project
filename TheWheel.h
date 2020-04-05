@@ -2,6 +2,8 @@
 #ifndef THEWHEEL_H
 #define THEWHEEL_H
 
+#include <iostream>
+
 using namespace std;
 
 // The Wheel Class

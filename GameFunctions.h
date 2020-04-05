@@ -13,7 +13,7 @@
 using namespace std;
 // The single instance of The wheel class that will be used.
 WheelLinkedList TheWheel;
-ContestantLinkedList PlayerBase; 
+ContestantLinkedList PlayerBase;
 
 // Function Declarations
 int SectionIdentifier(int, int);
@@ -42,10 +42,10 @@ int SpinTheWheel()
 
         // Call Search Method . Display Method
         cout << "---"
-        << ""
-        << TheWheel.Search(sectionID)->getSectionData().getSectionType()
-        << "---"
-        << endl;
+             << ""
+             << TheWheel.Search(sectionID)->getSectionData().getSectionType()
+             << "---"
+             << endl;
 
         // Sleep for .5 seconds
         Sleep(0300);
@@ -68,63 +68,54 @@ void TheWheelCreator()
             WheelSection Section(i, 0, "Bankrupt");
             TheWheel.InsertIntoWheel(Section);
             Bankrupt--;
-
         }
         else if (LoseATurn != 0)
         {
             WheelSection Section(i, 0, "Lose A Turn.");
             TheWheel.InsertIntoWheel(Section);
             LoseATurn--;
-
         }
         else if (FiveHundred != 0)
         {
             WheelSection Section(i, 500, "$500");
             TheWheel.InsertIntoWheel(Section);
             FiveHundred--;
-
         }
         else if (FiveFifty != 0)
         {
             WheelSection Section(i, 500, "$550");
             TheWheel.InsertIntoWheel(Section);
             FiveFifty--;
-
         }
         else if (SixHundred != 0)
         {
             WheelSection Section(i, 600, "$600");
             TheWheel.InsertIntoWheel(Section);
             SixHundred--;
-
         }
         else if (SixFifty != 0)
         {
             WheelSection Section(i, 650, "$650");
             TheWheel.InsertIntoWheel(Section);
             SixFifty--;
-
         }
         else if (SevenHundred != 0)
         {
             WheelSection Section(i, 700, "$700");
             TheWheel.InsertIntoWheel(Section);
             SevenHundred--;
-
         }
         else if (EightHundred != 0)
         {
             WheelSection Section(i, 800, "$800");
             TheWheel.InsertIntoWheel(Section);
             EightHundred--;
-
         }
         else if (EightFifty != 0)
         {
             WheelSection Section(i, 850, "$850");
             TheWheel.InsertIntoWheel(Section);
             EightFifty--;
-
         }
         else if (TwoThousandFive != 0)
         {
@@ -135,30 +126,58 @@ void TheWheelCreator()
     }
 }
 
-void ThePlayerBaseCreator () 
+void ThePlayerBaseCreator()
 {
-    int i; 
+    int i;
     for (i = 1; i <= 3; i++)
     {
         system("cls");
         Contestant Player;
-        cout << "Player #" << i << endl; 
+        cout << "Player #" << i << endl;
         Player.setContestantName();
         Player.setContestantGrandTotal(0);
         Player.setContestantNumber(i);
-        PlayerBase.insertAtBack(Player); 
+        PlayerBase.insertAtBack(Player);
     }
     cout << "Players have been added..." << endl;
 }
 
 int GamePlayMenu()
 {
-    int playerOpt = 0;
-    cout << "1. Spin The Wheel" << endl;
-    cout << "2. Buy A Vowel ($150)." << endl;
-    cout << "3. Guess the entire word." << endl;
-    cin >> playerOpt;
+    int playerOpt;
+    do
+    {
+        system("cls");
+        playerOpt = 0;
+        cout << "1. Spin The Wheel" << endl;
+        cout << "2. Buy A Vowel ($150)." << endl;
+        cout << "3. Guess the entire word." << endl;
+        cin >> playerOpt;
+    } while (playerOpt != 1 || playerOpt != 2 || playerOpt != 3);
+
     return playerOpt;
+}
+
+bool GameContiue()
+{
+    int playerOpt, flag;
+    cout << "Congratulations." << endl;
+    do
+    {
+        cout << "Would you like to Play Again?" << endl;
+        cout << "1. Yes \n2.No" << endl;
+        cin >> playerOpt;
+        if (playerOpt == 1)
+        {
+            flag = 1;
+            return true;
+        }
+        else if (playerOpt == 2)
+        {
+            flag = 1;
+            return false;
+        }
+    } while (flag == 0);
 }
 
 #endif // GAMEFUCNTIONS_H
