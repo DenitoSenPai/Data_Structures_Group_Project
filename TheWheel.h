@@ -2,16 +2,16 @@
 #ifndef THEWHEEL_H
 #define THEWHEEL_H
 
-#include <iostream>
-
 using namespace std;
 
 // The Wheel Class
+// Shanice Facey
 class WheelSection
 {
 private:
     int sectionID;
     int sectionValue;
+    int sectionColor; // added with setters and getters
     string sectionType;
 public:
     WheelSection()
@@ -19,21 +19,28 @@ public:
         sectionID = 0;
         sectionValue = 0;
         sectionType = "";
+        sectionColor = 0;
     }
-    WheelSection(int sectionID, int sectionValue, string sectionType)
+    WheelSection(int sectionID, int sectionValue, string sectionType, int sectionColor)
     {
         this->sectionID = sectionID;
         this->sectionValue = sectionValue;
         this->sectionType = sectionType;
+        this->sectionColor = sectionColor;
     }
     WheelSection(const WheelSection& s)
     {
         this->sectionID = s.sectionID;
         this->sectionValue = s.sectionValue;
         this->sectionType = s.sectionType;
+        this->sectionColor = s.sectionColor;
     }
 
     // Wheel Section Setters
+    void setSectionColor (int sectionColor)
+    {
+        this->sectionColor = sectionColor;
+    }
     void setSectionId(int sectionID)
     {
         this->sectionID = sectionID;
@@ -48,6 +55,10 @@ public:
     }
 
     // Wheel Section Getters
+    int getSectionColor( int sectionColor)
+    {
+        return sectionColor;
+    }
     int getSectionId()
     {
         return sectionID;
@@ -67,6 +78,7 @@ public:
         cout << "The Section ID is: " << getSectionId() << endl;
         cout << "The Section Value is: " << getSectionValue() << endl;
         cout << "The Section Type is: " << getSectionType() << endl;
+        //cout <<" The color section is: "<< getSectionColor(int sectionColor)<< endl;
     }
     ~WheelSection()
     {}

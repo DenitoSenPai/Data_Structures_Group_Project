@@ -40,7 +40,7 @@ public:
     }
     void setContestantName (string contestantName)
     {
-        this -> contestantName = contestantName; 
+        this -> contestantName = contestantName;
     }
     void setContestantGrandTotal (int contestantGrandTotal)
     {
@@ -101,7 +101,7 @@ public:
     }
     void setPlayerDataGT (int GT)
     {
-        // Sets the grand total directly. 
+        // Sets the grand total directly.
         this -> PlayerData.setContestantGrandTotal(GT);
     }
 

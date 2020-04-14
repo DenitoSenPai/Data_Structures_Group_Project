@@ -6,18 +6,19 @@
 #include <cstdlib>
 #include <ctime>
 #include <windows.h>
+#include <mmsystem.h>
 
 // Class Header Files
 #include "GameFunctions.h"
 #include "TheWheel.h"
 #include "Contestant.h"
-#include "Guessed_Queue.h"
+#include "GuessedQueue.h"
 
 using namespace std;
-// The single instance of The wheel class that will be used.
+
+// The single instance of The Wheel & PlayerBase class that will be used.
 WheelLinkedList TheWheel;
 ContestantLinkedList PlayerBase;
-Queue GuessedQ;
 
 // Function Declarations
 int SectionIdentifier(int, int);
@@ -38,22 +39,23 @@ int SectionIdentifier(int x, int y)
     //return rand() % (y - x + 1) + x;
     return x + (rand() % y);
 }
+
 int SpinTheWheel()
 {
+    WheelSection Wheel;
+    // PlaySound(TEXT("playback.wav"),NULL,SND_ASYNC);// plays Wheel of fortune theme song. (.wav file has to be in the same folder)
     int i = 0, sectionID = 1;
     for (i = 0; i <= SectionIdentifier(10, 20); i++)
     {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), i | FOREGROUND_INTENSITY); // uses the loop increment to change the section color based of the color number scheme
         // Clear Screen
         system("cls");
         sectionID = SectionIdentifier(1, 23);
 
         // Call Search Method . Display Method
-        cout << "---"
-             << ""
-             << TheWheel.Search(sectionID)->getSectionData().getSectionType()
-             << "---"
-             << endl;
-
+        Wheel.getSectionColor(i); // uses the loop increment to change the section color based of the color number scheme
+        cout << "\t\t\t\t\t\t\t\t\t\t\t\t---> "
+             << "" << TheWheel.Search(sectionID)->getSectionData().getSectionType() << " <---" << endl;
         // Sleep for .5 seconds
         Sleep(0300);
     }
@@ -68,67 +70,70 @@ void TheWheelCreator()
            SixHundred = 4, SixFifty = 3, SevenHundred = 3,
            EightHundred = 1, EightFifty = 1, TwoThousandFive = 1;
 
-    for (i = 1; i <= 23; i++)
+    for (i = 1; i <= 23; i++) // uses this loop to give each section a particular color from the colour spectrum
     {
-        if (Bankrupt != 0)
+        for (int n = 1; n <= 23; n++)
         {
-            WheelSection Section(i, 0, "Bankrupt");
-            TheWheel.InsertIntoWheel(Section);
-            Bankrupt--;
-        }
-        else if (LoseATurn != 0)
-        {
-            WheelSection Section(i, 0, "Lose A Turn.");
-            TheWheel.InsertIntoWheel(Section);
-            LoseATurn--;
-        }
-        else if (FiveHundred != 0)
-        {
-            WheelSection Section(i, 500, "$500");
-            TheWheel.InsertIntoWheel(Section);
-            FiveHundred--;
-        }
-        else if (FiveFifty != 0)
-        {
-            WheelSection Section(i, 500, "$550");
-            TheWheel.InsertIntoWheel(Section);
-            FiveFifty--;
-        }
-        else if (SixHundred != 0)
-        {
-            WheelSection Section(i, 600, "$600");
-            TheWheel.InsertIntoWheel(Section);
-            SixHundred--;
-        }
-        else if (SixFifty != 0)
-        {
-            WheelSection Section(i, 650, "$650");
-            TheWheel.InsertIntoWheel(Section);
-            SixFifty--;
-        }
-        else if (SevenHundred != 0)
-        {
-            WheelSection Section(i, 700, "$700");
-            TheWheel.InsertIntoWheel(Section);
-            SevenHundred--;
-        }
-        else if (EightHundred != 0)
-        {
-            WheelSection Section(i, 800, "$800");
-            TheWheel.InsertIntoWheel(Section);
-            EightHundred--;
-        }
-        else if (EightFifty != 0)
-        {
-            WheelSection Section(i, 850, "$850");
-            TheWheel.InsertIntoWheel(Section);
-            EightFifty--;
-        }
-        else if (TwoThousandFive != 0)
-        {
-            WheelSection Section(i, 2500, "$2500");
-            TheWheel.InsertIntoWheel(Section);
-            TwoThousandFive--;
+            if (Bankrupt != 0)
+            {
+                WheelSection Section(n, 0, "Bankrupt", i);
+                TheWheel.InsertIntoWheel(Section);
+                Bankrupt--;
+            }
+            else if (LoseATurn != 0)
+            {
+                WheelSection Section(n, 0, "Lose A Turn", i);
+                TheWheel.InsertIntoWheel(Section);
+                LoseATurn--;
+            }
+            else if (FiveHundred != 0)
+            {
+                WheelSection Section(n, 500, "$500", i);
+                TheWheel.InsertIntoWheel(Section);
+                FiveHundred--;
+            }
+            else if (FiveFifty != 0)
+            {
+                WheelSection Section(n, 500, "$550", i);
+                TheWheel.InsertIntoWheel(Section);
+                FiveFifty--;
+            }
+            else if (SixHundred != 0)
+            {
+                WheelSection Section(n, 600, "$600", i);
+                TheWheel.InsertIntoWheel(Section);
+                SixHundred--;
+            }
+            else if (SixFifty != 0)
+            {
+                WheelSection Section(n, 650, "$650", i);
+                TheWheel.InsertIntoWheel(Section);
+                SixFifty--;
+            }
+            else if (SevenHundred != 0)
+            {
+                WheelSection Section(n, 700, "$700", i);
+                TheWheel.InsertIntoWheel(Section);
+                SevenHundred--;
+            }
+            else if (EightHundred != 0)
+            {
+                WheelSection Section(n, 800, "$800", i);
+                TheWheel.InsertIntoWheel(Section);
+                EightHundred--;
+            }
+            else if (EightFifty != 0)
+            {
+                WheelSection Section(n, 850, "$850", i);
+                TheWheel.InsertIntoWheel(Section);
+                EightFifty--;
+            }
+            else if (TwoThousandFive != 0)
+            {
+                WheelSection Section(n, 2500, "$2500", i);
+                TheWheel.InsertIntoWheel(Section);
+                TwoThousandFive--;
+            }
         }
     }
 }
@@ -136,23 +141,23 @@ void TheWheelCreator()
 void ThePlayerBaseCreator()
 {
     int i = 0;
-    string playerName = "Default"; 
+    string playerName = "Default";
     for (i = 1; i <= 3; i++)
     {
         system("cls");
-
         cout << "Player #" << i << endl;
-        cout << "Enter Player Name: "; 
-        cin >> playerName; 
-
-        Contestant Player;  
-        Player.setContestantName(playerName); 
-        Player.setContestantGrandTotal(0); 
+        cout << "Enter Player Name: ";
+        cin >> playerName;
+        Contestant Player;
+        Player.setContestantName(playerName);
+        Player.setContestantGrandTotal(0);
         Player.setContestantNumber(i);
 
         PlayerBase.insertAtBack(Player);
     }
     cout << "Players have been added..." << endl;
+    system("pause"); 
+    system("cls");
 }
 
 int GamePlayMenu()
@@ -162,12 +167,13 @@ int GamePlayMenu()
     while (flag != 1)
     {
         playerOpt = 0;
-        cout << "1. Spin The Wheel" << endl;
+        cout << "\n\n1. Spin The Wheel" << endl;
         cout << "2. Buy A Vowel ($150)." << endl;
         cout << "3. Guess the entire word." << endl;
+        cout << "4. Guess another letter." << endl; 
         cin >> playerOpt;
 
-        if (playerOpt == 1 || playerOpt == 2 || playerOpt == 3)
+        if (playerOpt == 1 || playerOpt == 2 || playerOpt == 3 || playerOpt == 4)
             flag = 1;
 
         system("cls");
@@ -183,15 +189,15 @@ int GameContinue()
     while (flag != 1)
     {
         cout << "Would you like to Play Again?" << endl;
-        cout << "1. Yes" << endl; 
-        cout << "2. No" << endl; 
+        cout << "1. Yes" << endl;
+        cout << "2. No" << endl;
         cin >> playerOpt;
 
-        if(playerOpt == 1 || playerOpt == 2)
+        if (playerOpt == 1 || playerOpt == 2)
             flag = 1;
 
         system("cls");
-    } 
+    }
 
     return playerOpt;
 }
