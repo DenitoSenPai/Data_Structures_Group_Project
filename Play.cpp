@@ -18,12 +18,11 @@ GuessedQueue GuessedQ;
 
 /*
 	Group Members:
-		Dinito Thompson
-		Shanice Facey
-		...
-		...
-	Task List:
-		...
+		Dinito Thompson : 1801202
+		Shanice Facey : 1701438
+		Ricardo Johnson : 1702583
+		Rojae Davis : 1608195
+	See Documentation for task list. 
 */
 
 using namespace std;
