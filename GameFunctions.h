@@ -33,6 +33,7 @@ void ThePlayerBaseCreator();
 // Functions Used
 int SectionIdentifier(int x, int y)
 {
+    fflush(stdin);
     /*Generates a random number inbetween
     two indicated values.*/
     srand(time(NULL));
@@ -42,12 +43,15 @@ int SectionIdentifier(int x, int y)
 
 int SpinTheWheel()
 {
+    fflush(stdin);
     WheelSection Wheel;
     // PlaySound(TEXT("playback.wav"),NULL,SND_ASYNC);// plays Wheel of fortune theme song. (.wav file has to be in the same folder)
     int i = 0, sectionID = 1;
     for (i = 0; i <= SectionIdentifier(10, 20); i++)
     {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), i | FOREGROUND_INTENSITY); // uses the loop increment to change the section color based of the color number scheme
+        // uses the loop increment to change the section color based of the color number scheme
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), i | FOREGROUND_INTENSITY);
+
         // Clear Screen
         system("cls");
         sectionID = SectionIdentifier(1, 23);
@@ -140,37 +144,50 @@ void TheWheelCreator()
 
 void ThePlayerBaseCreator()
 {
+    fflush(stdin);
     int i = 0;
     string playerName = "Default";
+
     for (i = 1; i <= 3; i++)
     {
         system("cls");
+
+        // Enter Player Details
         cout << "Player #" << i << endl;
         cout << "Enter Player Name: ";
         cin >> playerName;
+        cout << endl;
+
+        // Create a Player instance
         Contestant Player;
+
+        // Populate that Player instance
         Player.setContestantName(playerName);
         Player.setContestantGrandTotal(0);
         Player.setContestantNumber(i);
 
+        // Add Player instance to PlayerBase
         PlayerBase.insertAtBack(Player);
     }
+
+    system("cls");
     cout << "Players have been added..." << endl;
-    system("pause"); 
+    system("pause");
     system("cls");
 }
 
 int GamePlayMenu()
 {
+    fflush(stdin);
     int playerOpt, flag = 0;
 
     while (flag != 1)
     {
         playerOpt = 0;
-        cout << "\n\n1. Spin The Wheel" << endl;
+        cout << "\n1. Spin The Wheel" << endl;
         cout << "2. Buy A Vowel ($150)." << endl;
         cout << "3. Guess the entire word." << endl;
-        cout << "4. Guess another letter." << endl; 
+        cout << "4. Guess another letter." << endl;
         cin >> playerOpt;
 
         if (playerOpt == 1 || playerOpt == 2 || playerOpt == 3 || playerOpt == 4)
@@ -184,10 +201,12 @@ int GamePlayMenu()
 
 int GameContinue()
 {
+    fflush(stdin);
     int playerOpt = 0, flag = 0;
 
     while (flag != 1)
     {
+        system("cls");
         cout << "Would you like to Play Again?" << endl;
         cout << "1. Yes" << endl;
         cout << "2. No" << endl;
@@ -195,8 +214,6 @@ int GameContinue()
 
         if (playerOpt == 1 || playerOpt == 2)
             flag = 1;
-
-        system("cls");
     }
 
     return playerOpt;
@@ -204,8 +221,10 @@ int GameContinue()
 
 void MemoryAllocator()
 {
-    PlayerBase.~ContestantLinkedList();
-    TheWheel.~WheelLinkedList();
+    fflush(stdin);
+    PlayerBase.destroy();
+    TheWheel.destroyWheelSection();
+    cout << "Memory Has Been Allocated." << endl;
 }
 
 #endif // GAMEFUCNTIONS_H

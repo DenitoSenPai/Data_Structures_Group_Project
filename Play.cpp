@@ -22,7 +22,7 @@ GuessedQueue GuessedQ;
 		Shanice Facey : 1701438
 		Ricardo Johnson : 1702583
 		Rojae Davis : 1608195
-	See Documentation for task list. 
+	See Documentation for task list.
 */
 
 using namespace std;
@@ -38,9 +38,10 @@ void gotoxy(int x, int y)
 int main ()
 {
 
+    //POSITIONS THE CURSOR AT THESE COORDINATES
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h, 13 | FOREGROUND_INTENSITY); // changes background color to blue
-    gotoxy(50,0); //POSITIONS THE CURSOR AT THESE COORDINATES
+    gotoxy(50,0);
 
     cout << "Welcome to Young Lads Wheel of Fortune\n\n\n" << endl;
     system("pause");
@@ -56,8 +57,8 @@ int main ()
     int gameRound = 1, i = 0, playerOpt = 1,
         currentPlayer = 1, lineSize = 0, spinResult = 0,
         wordGuessed = 0, letterOccurence = 0, highestPlayer = 0,
-        numDash = 0, sectionValue = 0,
-        roundTotal = 0, arrayCompare = 0;
+        numDash = 0, sectionValue = 0, roundTotal = 0, arrayCompare = 0,
+        highest = 0;
 
     char availableVowel[10], purchaseVowel, sChar, guessedChar;
     // Each player round total.
@@ -131,8 +132,12 @@ int main ()
                     // Display the copy array to be solved.
                     cout << "Round #" << gameRound << endl;
                     cout << lineCopy << endl;
+                    cout << endl;
+
                     cout << "Player Name: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantName() << endl;
                     cout << "Player #: " << currentPlayer << endl;
+                    cout << endl;
+
                     cout << "Player Grand Total: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
                     cout << "Guessed Attempts" << endl;
                     GuessedQ.Display();
@@ -148,7 +153,7 @@ int main ()
 
                         // Use the spinResult value to find & display the Wheel Section/Card type.
                         cout << "" << TheWheel.Search(spinResult)->getSectionData().getSectionType() << endl;
-
+                        cout << endl;
                         // Store the value of that card/section to be analyzed.
                         sectionValue = TheWheel.Search(spinResult)->getSectionData().getSectionValue();
 
@@ -179,8 +184,9 @@ int main ()
                         {
                             cout << "Guessed Attempts" << endl;
                             GuessedQ.Display();
+                            cout << endl;
 
-                            cout << "Guess a letter." << endl;
+                            cout << "Guess a letter: ";
                             cin >> guessedChar;
                             GuessedQ.enqueue(guessedChar); // add guessed letter to queue
 
@@ -200,7 +206,7 @@ int main ()
                                 // If there are no occurences then its not in the array.
                                 // As such, attempt was wrong and Current Player moves to next player.
                                 system("cls");
-                                cout << "Sorry Incorrect Letter Guessed." << endl;
+                                cout << "Sorry Incorrect Letter Guessed," << endl;
                                 cout << "Moving to next player..." << endl;
                                 currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
                                 system("pause");
@@ -219,9 +225,9 @@ int main ()
                                 // Player gets that roundTotal for that correct guessed.
                                 PlayerBase.Search(currentPlayer)->setPlayerDataGT(playerAccount[currentPlayer - 1]);
 
-                                cout << "Your Guess Was Correct." << endl;
+                                cout << "Your Guess Was Correct," << endl;
                                 // Display the player reward.
-                                cout << "Current Grand Total: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
+                                cout << "Current Grand Total: $" << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
 
                                 system("pause");
                             }
@@ -243,8 +249,10 @@ int main ()
                             for (i = 0; i <= 9; i++)
                                 cout << "|" << availableVowel[i] << " | ";
 
-                            cout << "\nEach Vowel Cost $150" << endl;
-                            cout << "Enter the Vowel you wish to purchase: " << endl;
+                            cout << endl;
+                            cout << endl
+                                 << "Each Vowel Cost $150" << endl;
+                            cout << "Enter The Vowel You Wish To Purchase: ";
                             cin >> purchaseVowel;
 
                             GuessedQ.enqueue(purchaseVowel);
@@ -272,7 +280,7 @@ int main ()
                                         availableVowel[i] = '-';
 
                                         // Player Account is charged.
-                                        playerAccount[currentPlayer - 1] -= 150;
+                                        playerAccount[currentPlayer - 1] = playerAccount[currentPlayer - 1] - 150;
                                         PlayerBase.Search(currentPlayer)->setPlayerDataGT(playerAccount[currentPlayer - 1]);
                                         break;
                                     }
@@ -312,7 +320,7 @@ int main ()
                             {
                                 // Player enters the incorrect vowel/letter.
                                 system("cls");
-                                cout << "Sorry, incorrect vowel entered" << endl;
+                                cout << "Sorry, Incorrect Vowel/Character Entered." << endl;
                                 system("pause");
                             }
                         }
@@ -320,7 +328,8 @@ int main ()
                         {
                             // Player doesnt have enough money to purchase a vowel.
                             system("cls");
-                            cout << "Your Current Balance Is: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
+                            cout << "Your Current Balance Is: $" << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
+                            cout << endl;
                             cout << "Try Giving The Wheel A Spin." << endl;
                             system("pause");
                         }
@@ -330,42 +339,71 @@ int main ()
                     case 3:
                         system("cls");
 
-                        cout << "Guessed Attempts" << endl;
-                        GuessedQ.Display();
+                        fflush(stdin);
 
-                        cout << "Enter the entire Word/Phrase. " << endl;
-                        cout << "Ensure its Properly formated. " << endl;
-                        cin >> lineGuess;
-
-                        if (lineGuess == lineString)
+                        // Checks to see if the Player has enough money to purchase a vowel.
+                        if (PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() > 0)
                         {
                             system("cls");
-                            cout << "Congratulations, you attempt was succesfull." << endl;
-                            for (i = 0; i < lineSize; i++)
-                                lineCopy[i] = lineContent[i];
-                            system("pause");
+
+                            cout << "Guessed Attempts" << endl;
+                            GuessedQ.Display();
+                            cout << endl;
+
+                            cout << "Please Ensure Your Attempt Is," << endl;
+                            cout << "Properly formated. " << endl;
+                            cout << endl;
+
+                            cout << "Enter the entire Word/Phrase: ";
+
+                            cin >> lineGuess;
+
+                            if (lineGuess == lineString)
+                            {
+                                system("cls");
+                                cout << "Congratulations, you attempt was succesfull." << endl;
+                                cout << endl;
+                                cout << "The Word/Phrase Was: " << lineString << endl;
+
+                                for (i = 0; i < lineSize; i++)
+                                    lineCopy[i] = lineContent[i];
+
+                                system("pause");
+                            }
+                            else
+                            {
+                                system("cls");
+                                cout << "Sorry, your guess was incorrect," << endl;
+                                cout << "Moving to next player." << endl;
+                                currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
+                                system("pause");
+                            }
                         }
                         else
                         {
-                            system("cls");
-                            cout << "Sorry, your guess was incorrect." << endl;
-                            cout << "Moving to next player." << endl;
-                            currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
+                            system ("cls");
+                            cout << "Sorry, You Dont Have Any Money," << endl;
+                            cout << "Try Giving The Wheel A Spin" << endl;
+                            cout << endl;
                             system("pause");
                         }
                         break;
 
-					case 4:
-						system("cls");
+                    case 4:
+                        // Guess another letter.
+                        system("cls");
 
-						if (PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() > 0)
-						{
-							cout << "Guessed Attempts" << endl;
+                        if (PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() > 0)
+                        {
+                            cout << "Guessed Attempts" << endl;
                             GuessedQ.Display();
+                            cout << endl;
 
-                            cout << "Guess a letter." << endl;
+                            cout << "Guess a letter: ";
                             cin >> guessedChar;
-                            GuessedQ.enqueue(guessedChar); // add guessed letter to queue
+
+                            // add guessed letter to queue
+                            GuessedQ.enqueue(guessedChar);
 
                             letterOccurence = 0;
                             for (i = 0; i < lineSize; i++)
@@ -383,15 +421,14 @@ int main ()
                                 // If there are no occurences then its not in the array.
                                 // As such, attempt was wrong and Current Player moves to next player.
                                 system("cls");
-                                cout << "Sorry Incorrect Letter Guessed." << endl;
-                                cout << "Moving to next player..." << endl;
+                                cout << "Sorry Incorrect Letter Guessed," << endl;
+                                cout << "Moving to next player." << endl;
                                 currentPlayer = PlayerBase.Search(currentPlayer)->getNextPlayer()->getPlayerData().getContestantNumber();
                                 system("pause");
                             }
                             else
                             {
                                 system("cls");
-
                                 // There were X amount of occurences.
                                 fflush(stdin);
 
@@ -403,20 +440,22 @@ int main ()
                                 PlayerBase.Search(currentPlayer)->setPlayerDataGT(playerAccount[currentPlayer - 1]);
 
                                 cout << "Your Guess Was Correct." << endl;
+
                                 // Display the player reward.
-                                cout << "Current Grand Total: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
+                                cout << "Current Grand Total: $" << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
 
                                 system("pause");
                             }
-						}
-						else
-						{
-							system("cls");
-							cout << "Sorry, You need to have money in your account to Guess a word." << endl;
-							cout << "Try giving The Wheel a Spin..." << endl;
-							system("pause");
-						}
-						break;
+                        }
+                        else
+                        {
+                            system ("cls");
+                            cout << "Sorry, You Dont Have Any Money," << endl;
+                            cout << "Try Giving The Wheel A Spin" << endl;
+                            cout << endl;
+                            system("pause");
+                        }
+                        break;
 
                     default:
                         system("cls");
@@ -436,60 +475,73 @@ int main ()
 
                 // Word has been solved and Round is coming to a conclusion.
 
-                // Winner is awarded.
+                // Winner of that round is awarded.
                 system("cls");
+
+                fflush(stdin);
                 cout << "Attempts Made: " << endl;
                 GuessedQ.Display();
-                cout << "Word was: " << lineString << endl;
+                cout << endl;
+
+                cout << "Word/Phrase Is: " << lineString << endl;
                 cout << "Winner of Round #" << gameRound << endl;
                 cout << "Player Name: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantName() << endl;
+                cout << endl;
 
                 // Updates each player grand total.
                 for (i = 1; i <= 3; i++)
                     PlayerBase.Search(i)->setPlayerDataGT(playerAccount[i - 1]);
 
-				GuessedQ.destroy();
+                GuessedQ.destroy();
 
                 // Increase Round.
                 gameRound++;
                 system("pause");
 
             }
+
+            // Find the contestant with the highest Grand Total.
+            fflush(stdin);
+            for (i = 1; i <= 3; i++)
+            {
+                if (PlayerBase.Search(i)->getPlayerData().getContestantGrandTotal() > highest)
+                {
+                    highest = PlayerBase.Search(i)->getPlayerData().getContestantGrandTotal();
+                    highestPlayer = PlayerBase.Search(i)->getPlayerData().getContestantNumber();
+                }
+            }
+
+
+            // Contestant with the highest Grand total is declared the winner.
+            fflush(stdin);
+            system("cls");
+            cout << "Game Winner: " << PlayerBase.Search(highestPlayer)->getPlayerData().getContestantName() << endl;
+            cout << "Final Grand Total: " << highest << endl;
+            system("pause");
+
+            // Close Game File.
             gameFile.close();
         }
-        int i = 1,
-            highest = PlayerBase.Search(i)->getPlayerData().getContestantGrandTotal();
 
-        for (i = 2; i <= 3; i++)
-        {
-            if (PlayerBase.Search(i)->getPlayerData().getContestantGrandTotal() > highest)
-            {
-                highest = PlayerBase.Search(i)->getPlayerData().getContestantGrandTotal();
-                highestPlayer = PlayerBase.Search(i)->getPlayerData().getContestantNumber();
-            }
-        }
-        system("cls");
-        cout << "Congratulations to: " << endl;
-        cout << "Game Winner: " << PlayerBase.Search(highestPlayer)->getPlayerData().getContestantName() << endl;
-        cout << "Final Grand Total: " << highest << endl;
-        system("pause");
-
+        // Check is players want to play again.
         playerOpt = GameContinue();
     }
     while (playerOpt == 1);
     system("cls");
 
+    MemoryAllocator();
+
     gotoxy(50,0);
     // PlaySound(TEXT("Fatality.wav"),NULL,SND_ASYNC);// plays MK Fatality sound effect. (.wav file has to be in the same folder)
-        for (int f =1; f < 100; f++)
-        {
-            system("cls");
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),f | FOREGROUND_INTENSITY);
-            gotoxy(50,0);cout << "Thank You For Playing..." << endl;
-            Sleep(0300);
-        }
-        
-    MemoryAllocator();
+    for (int f =1; f < SectionIdentifier(1,5); f++)
+    {
+        fflush(stdin);
+        system("cls");
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),f | FOREGROUND_INTENSITY);
+        gotoxy(50,0);
+        cout << "Thank You For Playing..." << endl;
+        Sleep(0200);
+    }
 
     return 0;
 }
