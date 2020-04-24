@@ -498,10 +498,18 @@ int main ()
 
             }
 
+            // Player with the highest grand total wins.
             fflush(stdin);
+            highestPlayer = 1;
+            for (i=1; i<=3; i++)
+            {
+                if (PlayerBase.Search(i)->getPlayerData().getContestantGrandTotal() > highest)
+                    highestPlayer = i;
+            }
+
             system("cls");
-            cout << "Game Winner: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantName() << endl;
-            cout << "Final Grand Total: $" << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
+            cout << "Game Winner: " << PlayerBase.Search(highestPlayer)->getPlayerData().getContestantName() << endl;
+            cout << "Final Grand Total: $" << PlayerBase.Search(highestPlayer)->getPlayerData().getContestantGrandTotal() << endl;
             system("pause");
 
             // Close Game File.
