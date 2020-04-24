@@ -95,30 +95,5 @@ public:
         this->frontQ = -1;
     }
 };
-/*
-class Guessed_Queue
-{
-private:
-    Guessed_Queue * Next;
-public:
-    Guessed_Queue()
-    {
-        Next = NULL;
-    }
-    Guessed_Queue(Guessed_Queue * Next)
-    {
-        this ->Next = Next;
-    }
-    Guessed_Queue* getNext()
-    {
-        return this->Next;
-    }
-    void setNext( Guessed_Queue* Next)
-    {
-        this->Next = Next;
-    }
-    ~Guessed_Queue() {}
-};
-*/
 
 #endif // GUESSED_QUEUE_H

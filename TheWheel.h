@@ -193,7 +193,10 @@ public:
             }
         }
         else
-            cout << "Nothing to seach here." << endl;
+        {
+            cout << "Incorrect Section ID || Nothing to search for." << endl;
+        }
+        return 0;
     }
 
     // Insert at Back to be added.

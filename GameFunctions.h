@@ -69,75 +69,72 @@ int SpinTheWheel()
 void TheWheelCreator()
 {
     // Variables to make sure the correct amount of sections are created.
-    int i, Bankrupt = 3, LoseATurn = 2,
+    int Bankrupt = 3, LoseATurn = 2,
            FiveHundred = 4, FiveFifty = 1,
            SixHundred = 4, SixFifty = 3, SevenHundred = 3,
            EightHundred = 1, EightFifty = 1, TwoThousandFive = 1;
 
-    for (i = 1; i <= 23; i++) // uses this loop to give each section a particular color from the colour spectrum
+    for (int n = 1; n <= 23; n++)
     {
-        for (int n = 1; n <= 23; n++)
+        if (Bankrupt != 0)
         {
-            if (Bankrupt != 0)
-            {
-                WheelSection Section(n, 0, "Bankrupt", i);
-                TheWheel.InsertIntoWheel(Section);
-                Bankrupt--;
-            }
-            else if (LoseATurn != 0)
-            {
-                WheelSection Section(n, 0, "Lose A Turn", i);
-                TheWheel.InsertIntoWheel(Section);
-                LoseATurn--;
-            }
-            else if (FiveHundred != 0)
-            {
-                WheelSection Section(n, 500, "$500", i);
-                TheWheel.InsertIntoWheel(Section);
-                FiveHundred--;
-            }
-            else if (FiveFifty != 0)
-            {
-                WheelSection Section(n, 500, "$550", i);
-                TheWheel.InsertIntoWheel(Section);
-                FiveFifty--;
-            }
-            else if (SixHundred != 0)
-            {
-                WheelSection Section(n, 600, "$600", i);
-                TheWheel.InsertIntoWheel(Section);
-                SixHundred--;
-            }
-            else if (SixFifty != 0)
-            {
-                WheelSection Section(n, 650, "$650", i);
-                TheWheel.InsertIntoWheel(Section);
-                SixFifty--;
-            }
-            else if (SevenHundred != 0)
-            {
-                WheelSection Section(n, 700, "$700", i);
-                TheWheel.InsertIntoWheel(Section);
-                SevenHundred--;
-            }
-            else if (EightHundred != 0)
-            {
-                WheelSection Section(n, 800, "$800", i);
-                TheWheel.InsertIntoWheel(Section);
-                EightHundred--;
-            }
-            else if (EightFifty != 0)
-            {
-                WheelSection Section(n, 850, "$850", i);
-                TheWheel.InsertIntoWheel(Section);
-                EightFifty--;
-            }
-            else if (TwoThousandFive != 0)
-            {
-                WheelSection Section(n, 2500, "$2500", i);
-                TheWheel.InsertIntoWheel(Section);
-                TwoThousandFive--;
-            }
+            WheelSection Section(n, 0, "Bankrupt", n);
+            TheWheel.InsertIntoWheel(Section);
+            Bankrupt--;
+        }
+        else if (LoseATurn != 0)
+        {
+            WheelSection Section(n, 0, "Lose A Turn", n);
+            TheWheel.InsertIntoWheel(Section);
+            LoseATurn--;
+        }
+        else if (FiveHundred != 0)
+        {
+            WheelSection Section(n, 500, "$500", n);
+            TheWheel.InsertIntoWheel(Section);
+            FiveHundred--;
+        }
+        else if (FiveFifty != 0)
+        {
+            WheelSection Section(n, 500, "$550", n);
+            TheWheel.InsertIntoWheel(Section);
+            FiveFifty--;
+        }
+        else if (SixHundred != 0)
+        {
+            WheelSection Section(n, 600, "$600", n);
+            TheWheel.InsertIntoWheel(Section);
+            SixHundred--;
+        }
+        else if (SixFifty != 0)
+        {
+            WheelSection Section(n, 650, "$650", n);
+            TheWheel.InsertIntoWheel(Section);
+            SixFifty--;
+        }
+        else if (SevenHundred != 0)
+        {
+            WheelSection Section(n, 700, "$700", n);
+            TheWheel.InsertIntoWheel(Section);
+            SevenHundred--;
+        }
+        else if (EightHundred != 0)
+        {
+            WheelSection Section(n, 800, "$800", n);
+            TheWheel.InsertIntoWheel(Section);
+            EightHundred--;
+        }
+        else if (EightFifty != 0)
+        {
+            WheelSection Section(n, 850, "$850", n);
+            TheWheel.InsertIntoWheel(Section);
+            EightFifty--;
+        }
+        else if (TwoThousandFive != 0)
+        {
+            WheelSection Section(n, 2500, "$2500", n);
+            TheWheel.InsertIntoWheel(Section);
+            TwoThousandFive--;
         }
     }
 }
@@ -217,14 +214,6 @@ int GameContinue()
     }
 
     return playerOpt;
-}
-
-void MemoryAllocator()
-{
-    fflush(stdin);
-    PlayerBase.destroy();
-    TheWheel.destroyWheelSection();
-    cout << "Memory Has Been Allocated." << endl;
 }
 
 #endif // GAMEFUCNTIONS_H

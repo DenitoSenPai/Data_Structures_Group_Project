@@ -56,32 +56,29 @@ int main ()
     // Game Control Variables
     int gameRound = 1, i = 0, playerOpt = 1,
         currentPlayer = 1, lineSize = 0, spinResult = 0,
-        wordGuessed = 0, letterOccurence = 0, highestPlayer = 0,
-        numDash = 0, sectionValue = 0, roundTotal = 0, arrayCompare = 0,
-        highest = 0;
-
-    char availableVowel[10], purchaseVowel, sChar, guessedChar;
-    // Each player round total.
-    int playerAccount[3];
+        letterOccurence = 0, highestPlayer = 0,
+        sectionValue = 0, roundTotal = 0, arrayCompare = 0,
+        highest = 0, playerAccount [3];
 
     // Play the game until the user decides to exit.
     do
     {
+        gameRound = 1;
         ifstream gameFile("Words_Phrases.txt");
 
         if (!gameFile.eof())
         {
+            int playerAccount[3] = {0,0,0};
+
             while (!gameFile.eof())
             {
                 // Reset each variable to be used again per round.
                 i = 0, playerOpt = 1, currentPlayer = 1, lineSize = 0,
-                spinResult = 0, wordGuessed = 0, letterOccurence = 0,
-                numDash = 0, sectionValue = 0, arrayCompare = 0;
+                spinResult = 0, letterOccurence = 0,
+                sectionValue = 0, arrayCompare = 0;
 
                 char availableVowel[10] = {'A','a','E','e','I','i','O','o','U','u'};
-                purchaseVowel = ' ', sChar = ' ', guessedChar = ' ';
-
-                int playerAccount[3] = {0,0,0};
+                char purchaseVowel = ' ', guessedChar = ' ';
 
                 roundTotal = playerAccount[currentPlayer - 1];
 
@@ -91,7 +88,8 @@ int main ()
                 getline(gameFile, lineString);
 
                 // Create a character array of lineString size.
-                char lineContent[lineSize = (lineString.size() + 1)];
+                lineSize = lineString.size() + 1;
+                char lineContent[lineSize];
 
                 // Copy the string from the lineString into the character array.
                 copy(lineString.begin(), lineString.end(), lineContent);
@@ -138,7 +136,7 @@ int main ()
                     cout << "Player #: " << currentPlayer << endl;
                     cout << endl;
 
-                    cout << "Player Grand Total: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
+                    cout << "Player Grand Total: $" << playerAccount[currentPlayer - 1] << endl;
                     cout << "Guessed Attempts" << endl;
                     GuessedQ.Display();
 
@@ -227,7 +225,7 @@ int main ()
 
                                 cout << "Your Guess Was Correct," << endl;
                                 // Display the player reward.
-                                cout << "Current Grand Total: $" << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
+                                cout << "Current Grand Total: $" << playerAccount[currentPlayer - 1] << endl;
 
                                 system("pause");
                             }
@@ -241,7 +239,7 @@ int main ()
                         fflush(stdin);
 
                         // Checks to see if the Player has enough money to purchase a vowel.
-                        if (PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() >= 150)
+                        if (playerAccount[currentPlayer - 1] >= 150)
                         {
                             system("cls");
 
@@ -328,7 +326,7 @@ int main ()
                         {
                             // Player doesnt have enough money to purchase a vowel.
                             system("cls");
-                            cout << "Your Current Balance Is: $" << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
+                            cout << "Your Current Balance Is: $" << playerAccount[currentPlayer - 1] << endl;
                             cout << endl;
                             cout << "Try Giving The Wheel A Spin." << endl;
                             system("pause");
@@ -342,7 +340,7 @@ int main ()
                         fflush(stdin);
 
                         // Checks to see if the Player has enough money to purchase a vowel.
-                        if (PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() > 0)
+                        if (playerAccount[currentPlayer - 1] > 0)
                         {
                             system("cls");
 
@@ -393,7 +391,7 @@ int main ()
                         // Guess another letter.
                         system("cls");
 
-                        if (PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() > 0)
+                        if (playerAccount[currentPlayer - 1] > 0)
                         {
                             cout << "Guessed Attempts" << endl;
                             GuessedQ.Display();
@@ -442,7 +440,7 @@ int main ()
                                 cout << "Your Guess Was Correct." << endl;
 
                                 // Display the player reward.
-                                cout << "Current Grand Total: $" << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
+                                cout << "Current Grand Total: $" << playerAccount[currentPlayer - 1] << endl;
 
                                 system("pause");
                             }
@@ -500,23 +498,10 @@ int main ()
 
             }
 
-            // Find the contestant with the highest Grand Total.
-            fflush(stdin);
-            for (i = 1; i <= 3; i++)
-            {
-                if (PlayerBase.Search(i)->getPlayerData().getContestantGrandTotal() > highest)
-                {
-                    highest = PlayerBase.Search(i)->getPlayerData().getContestantGrandTotal();
-                    highestPlayer = PlayerBase.Search(i)->getPlayerData().getContestantNumber();
-                }
-            }
-
-
-            // Contestant with the highest Grand total is declared the winner.
             fflush(stdin);
             system("cls");
-            cout << "Game Winner: " << PlayerBase.Search(highestPlayer)->getPlayerData().getContestantName() << endl;
-            cout << "Final Grand Total: " << highest << endl;
+            cout << "Game Winner: " << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantName() << endl;
+            cout << "Final Grand Total: $" << PlayerBase.Search(currentPlayer)->getPlayerData().getContestantGrandTotal() << endl;
             system("pause");
 
             // Close Game File.
@@ -527,21 +512,14 @@ int main ()
         playerOpt = GameContinue();
     }
     while (playerOpt == 1);
-    system("cls");
 
-    MemoryAllocator();
-
-    gotoxy(50,0);
     // PlaySound(TEXT("Fatality.wav"),NULL,SND_ASYNC);// plays MK Fatality sound effect. (.wav file has to be in the same folder)
-    for (int f =1; f < SectionIdentifier(1,5); f++)
-    {
-        fflush(stdin);
-        system("cls");
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),f | FOREGROUND_INTENSITY);
-        gotoxy(50,0);
-        cout << "Thank You For Playing..." << endl;
-        Sleep(0200);
-    }
+
+    fflush(stdin);
+    system("cls");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),5 | FOREGROUND_INTENSITY);
+    gotoxy(50,0);
+    cout << "Thank You For Playing..." << endl;
 
     return 0;
 }

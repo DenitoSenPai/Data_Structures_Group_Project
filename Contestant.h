@@ -186,7 +186,6 @@ public:
         ContestantNode * temp = head;
         if (!isEmpty())
         {
-
             while (temp != NULL)
             {
                 if (temp->getPlayerData().getContestantNumber() == contestantNumber)
@@ -197,6 +196,11 @@ public:
                     temp = temp->getNextPlayer();
             }
         }
+        else
+        {
+            cout << "Incorrect Section ID || Nothing to search for." << endl;
+        }
+        return 0;
     }
     void display()
     {
@@ -217,25 +221,25 @@ public:
     }
     void deleteContestantList()
     {
-        if (isEmpty())
-        {
-            cout << "There is nothing to remove" << endl;
-        }
-        else
+        if (!isEmpty())
         {
             ContestantNode * temp = head;
-            ContestantNode * prev = head;
-            head = head -> getNextPlayer();
-            temp = NULL;
+            while (temp -> getNextPlayer() != NULL)
+            {
+                head = temp -> getNextPlayer();
+                temp = NULL;
+                temp = head;
+            }
+            head = NULL;
+            delete temp;
         }
     }
 
     void destroy()
     {
-        while (!isEmpty())
-        {
-            deleteContestantList();
-        }
+        
+        deleteContestantList();
+
     }
     ~ContestantLinkedList()
     {
